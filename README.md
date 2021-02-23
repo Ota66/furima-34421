@@ -2,14 +2,16 @@
 
 ## users テーブル
 
-| Column        | Type    | Options     |
-| ------------- | ------- | ----------- |
-| nickname      | string  | null: false |
-| email         | string  | null: false |
-| password      | string  | null: false |
-| name          | string  | null: false |
-| katakana_name | string  | null: false |
-| birthday      | integer | null: false |
+| Column              | Type   | Options                   |
+| ------------------- | ------ | ------------------------- |
+| nickname            | string | null: false               |
+| email               | string | null: false, unique: true |
+| encrypted_password  | string | null: false               |
+| last_name           | string | null: false               |
+| first_name          | string | null: false               |
+| katakana_last_name  | string | null: false               |
+| katakana_first_name | string | null: false               |
+| birthday            | date   | null: false               |
 
 ### Association
 
@@ -18,18 +20,17 @@
 
 ## items テーブル
 
-| Column      | Type       | Options                        |
-| ----------  | ---------- | ------------------------------ |
-| image       | text       | null: false                    |
-| item_name   | text       | null: false                    |
-| description | text       | null: false                    |
-| category    | text       | null: false                    |
-| status      | text       | null: false                    |
-| burden      | text       | null: false                    |
-| area        | text       | null: false                    |
-| day         | text       | null: false                    |
-| price       | integer    | null: false                    |
-| user_id     | references | null: false, foreign_key: true |
+| Column         | Type       | Options                        |
+| -------------- | ---------- | ------------------------------ |
+| item_name      | string     | null: false                    |
+| description_id | integer    | null: false                    |
+| category_id    | integer    | null: false                    |
+| status_id      | integer    | null: false                    |
+| burden_id      | integer    | null: false                    |
+| area-id        | integer    | null: false                    |
+| day_id         | integer    | null: false                    |
+| price          | integer    | null: false                    |
+| user           | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -38,10 +39,10 @@
 
 ## buysテーブル
 
-| Column  | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| item_id | references | null: false, foreign_key: true |
-| user_id | references | null: false, foreign_key: true |
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| item   | references | null: false, foreign_key: true |
+| user   | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -53,13 +54,13 @@
 
 | Column        | Type       | Options                        |
 | ------------- | ---------- | ------------------------------ |
-| postal_code   | integer    | null: false                    |
-| prefectures   | text       | null: false                    |
-| municipality  | text       | null: false                    |
-| house_number  | text       | null: false                    |
-| building_name | text       |                                |
-| phone_number  | integer    | null: false                    |
-| user_id       | references | null: false, foreign_key: true |
+| postal_code   | string     | null: false                    |
+| prefectures   | integer    | null: false                    |
+| municipality  | string     | null: false                    |
+| house_number  | string     | null: false                    |
+| building_name | string     |                                |
+| phone_number  | string     | null: false                    |
+| buy           | references | null: false, foreign_key: true |
 
 ### Association
 
