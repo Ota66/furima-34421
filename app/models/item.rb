@@ -19,8 +19,7 @@ class Item < ApplicationRecord
       validates :area_id
       validates :day_id
     end 
-    validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 9999999}
-    validates :user_id
+    validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 10000000}
     validates :image
   end
 end
