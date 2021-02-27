@@ -76,15 +76,30 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Day must be other than 1")
       end
-      it 'priceが299以下10000000以上では出品できない' do
+      it 'priceが299以下では出品できない' do
         @item.price = 10
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be greater than 299")
       end
-      it 'priceが半角数字以外では出品できない' do
-        @item.price = 10
+      it 'priceが10000000以下では出品できない' do
+        @item.price = 10000000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than 299")
+        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
+      end
+      it 'priceが全角文字では出品できない' do
+        @item.price = 'あああ'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+      it 'priceが半角英数混合では出品できない' do
+        @item.price = "#{10}aaa"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+      it 'priceが半角英語では出品できない' do
+        @item.price = 'aaaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
       end
     end
   end
