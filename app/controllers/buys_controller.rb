@@ -1,8 +1,8 @@
 class BuysController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
-  before_action :set_redirect, only: [:index]
-  before_action :two_redirect, only: [:index]
+  before_action :set_redirect, only: [:index, :create]
+  before_action :two_redirect, only: [:index, :create]
 
   def index
     @buy_sipping = BuySipping.new

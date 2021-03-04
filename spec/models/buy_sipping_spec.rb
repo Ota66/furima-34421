@@ -19,7 +19,17 @@ RSpec.describe BuySipping, type: :model do
       end
     end
     context '商品が購入できない場合' do
-      it 'postal_codeが空だと購入できないこと' do
+      it 'user_idが空では購入できないこと' do
+        @buy_sipping.user_id = ''
+        @buy_sipping.valid?
+        expect(@buy_sipping.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idが空では購入できないこと' do
+        @buy_sipping.item_id = ''
+        @buy_sipping.valid?
+        expect(@buy_sipping.errors.full_messages).to include("Item can't be blank")
+      end
+      it 'postal_codeが空では購入できないこと' do
         @buy_sipping.postal_code = ''
         @buy_sipping.valid?
         expect(@buy_sipping.errors.full_messages).to include("Postal code can't be blank")
@@ -50,7 +60,17 @@ RSpec.describe BuySipping, type: :model do
         expect(@buy_sipping.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberが11桁以内の数値のみでないと購入できない' do
-        @buy_sipping.phone_number = 999123456789
+        @buy_sipping.phone_number = '999123456789'
+        @buy_sipping.valid?
+        expect(@buy_sipping.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'phone_numberが半角数字のみでないと購入できない' do
+        @buy_sipping.phone_number = 'aaaaaaaaaaa'
+        @buy_sipping.valid?
+        expect(@buy_sipping.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'phone_numberが全角数字だと購入できない' do
+        @buy_sipping.phone_number = '９９９９９９９９９９９'
         @buy_sipping.valid?
         expect(@buy_sipping.errors.full_messages).to include("Phone number is invalid")
       end
