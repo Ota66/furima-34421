@@ -1,12 +1,14 @@
 class BuysController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
+  before_action :set_redirect, only: [:index]
+  before_action :two_redirect, only: [:index]
 
   def index
-    @item = Item.find(params[:item_id])
     @buy_sipping = BuySipping.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @buy_sipping = BuySipping.new(private_params)
     if @buy_sipping.valid?
       pay_item
@@ -32,5 +34,16 @@ class BuysController < ApplicationController
     )
   end
 
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def set_redirect
+    redirect_to root_path if current_user.id == @item.user_id
+  end
+
+  def two_redirect
+    redirect_to root_path if @item.buy.present?
+  end
 
 end
