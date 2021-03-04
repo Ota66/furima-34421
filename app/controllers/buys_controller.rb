@@ -2,7 +2,6 @@ class BuysController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
   before_action :set_redirect, only: [:index, :create]
-  before_action :two_redirect, only: [:index, :create]
 
   def index
     @buy_sipping = BuySipping.new
@@ -39,11 +38,7 @@ class BuysController < ApplicationController
   end
 
   def set_redirect
-    redirect_to root_path if current_user.id == @item.user_id
-  end
-
-  def two_redirect
-    redirect_to root_path if @item.buy.present?
+    redirect_to root_path if current_user.id != @item.user_id || @item.buy.present?
   end
 
 end
